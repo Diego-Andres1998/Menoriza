@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memoriza - Juego de Memoria</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Memoriza</h1>
+            <div class="timer-container">
+                <span class="timer-label">Tiempo:</span>
+                <span id="timer" class="timer">00:00</span>
+            </div>
+        </header>
+
+        <!-- Level Selection -->
+        <div id="level-selection" class="level-selection">
+            <h2>Selecciona el Nivel</h2>
+            <div class="level-buttons">
+                <button id="level-12" class="level-btn" data-level="12">
+                    <span class="level-title">Fácil</span>
+                    <span class="level-desc">12 Cartas (3x4)</span>
+                </button>
+                <button id="level-16" class="level-btn" data-level="16">
+                    <span class="level-title">Difícil</span>
+                    <span class="level-desc">16 Cartas (4x4)</span>
+                </button>
+            </div>
+            
+            <!-- Rankings Section -->
+            <div class="rankings-section">
+                <div class="rankings-header">
+                    <h3>🏆 Mejores Tiempos</h3>
+                    <button id="view-full-rankings" class="rankings-btn">Ver Tabla Completa</button>
+                </div>
+                <div id="top-rankings" class="top-rankings">
+                    <!-- Los rankings se cargarán dinámicamente -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Board -->
+        <div id="game-board" class="game-board hidden">
+            <div class="game-controls">
+                <button id="new-game-btn" class="control-btn">Nuevo Juego</button>
+                <button id="change-level-btn" class="control-btn">Cambiar Nivel</button>
+            </div>
+            <div id="cards-container" class="cards-container">
+                <!-- Las cartas se generarán dinámicamente con JavaScript -->
+            </div>
+        </div>
+
+        <!-- Victory Modal -->
+        <div id="victory-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>¡Felicitaciones!</h2>
+                <p>Has completado el juego en <span id="final-time"></span></p>
+                <p>Por favor, completa tus datos para registrar tu participación:</p>
+                
+                <form id="registration-form" class="registration-form">
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rut">RUT:</label>
+                        <input type="number" id="rut" name="rut" placeholder="12345678-9">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edad">Edad:</label>
+                        <input type="number" id="edad" name="edad" min="1" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label for="curso">Selecciona el curso</label>
+                        <select id="curso" name="curso1" required>
+                            <option value="">Selecciona el curso</option>
+                            <option value="1ro básico">1º Básico</option>
+                            <option value="2do básico">2º Básico</option>
+                            <option value="3ro básico">3º Básico</option>
+                            <option value="4to básico">4º Básico</option>
+                            <option value="5to básico">5º Básico</option>
+                            <option value="6to básico">6º Básico</option>
+                            <option value="7mo básico">7º Básico</option>
+                            <option value="8vo básico">8º Básico</option>
+                            <option value="1ro medio">1º Medio</option>
+                            <option value="2do medio">2º Medio</option>
+                            <option value="3ro medio">3º Medio</option>
+                            <option value="4to medio">4º Medio</option>
+                        </select>
+                    </div>
+                 
+                    <div class="form-group">
+                        <label for="curso">Que carrera te gustaría estudiar en CFT Los Rios:</label>
+                        <select id="curso" name="curso" required>
+                            <option value="">Selecciona La carrera</option>
+                            <option value="TNS en Podología Clínica">TNS en Podología Clínica</option>
+                            <option value="TNS en Electricidad mención Energías Renovables">TNS en Electricidad mención Energías Renovables</option>
+                            <option value="TNS en Enfermería">TNS en Enfermería</option>
+                            <option value="TNS en Comunicación Audiovisual">TNS en Comunicación Audiovisual</option>
+                            <option value="TNS en Automatización">TNS en Automatización</option>
+                            <option value="TNS en Construcción mención Eficiencia Energética">TNS en Construcción mención Eficiencia Energética</option>
+                            <option value="TNS en Agroindustria e Innovación Alimentaria">TNS en Agroindustria e Innovación Alimentaria</option>
+                            <option value="TNS en Informática y Data Science">TNS en Informática y Data Science</option>
+                            <option value="TNS en Refrigeración y Climatización">TNS en Refrigeración y Climatización</option>
+                            <option value="TNS en Administración Pública Privada">TNS en Administración Pública y Privada</option>
+                            <option value="TNS en Turismo de Intereses Especiales">TNS en Turismo de Intereses Especiales</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="+56 9 1234 5678" required>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button type="submit" class="submit-btn">Registrar Participación</button>
+                        <button type="button" id="play-again-btn" class="secondary-btn">Jugar de Nuevo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2>¡Registro Exitoso!</h2>
+                <p>Gracias por participar. Tu tiempo ha sido registrado.</p>
+                <button id="final-play-again-btn" class="submit-btn">Jugar de Nuevo</button>
+            </div>
+        </div>
+
+        <!-- Rankings Modal -->
+        <div id="rankings-modal" class="modal hidden">
+            <div class="modal-content rankings-modal-content">
+                <h2>🏆 Tabla de Posiciones</h2>
+                <div class="rankings-tabs">
+                    <button id="rankings-tab-12" class="rankings-tab active" data-level="12">Fácil (12 cartas)</button>
+                    <button id="rankings-tab-16" class="rankings-tab" data-level="16">Difícil (16 cartas)</button>
+                </div>
+                <div id="full-rankings-content" class="full-rankings-content">
+                    <!-- La tabla completa se cargará aquí -->
+                </div>
+                <button id="close-rankings" class="secondary-btn">Cerrar</button>
+                <button id="export-csv" class="secondary-btn">Exportar a CSV</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(reg => console.log('Service Worker registered!', reg))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>

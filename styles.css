@@ -1,0 +1,899 @@
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #115D92 0%, #7FB827 50%, #F96B01 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    padding: 20px 0;
+    background: rgba(255, 255, 255, 0.637);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    color: #115D92;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.timer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.timer-label {
+    font-size: 1.2rem;
+    color: #115D92;
+    font-weight: bold;
+}
+
+.timer {
+    font-size: 1.5rem;
+    color: #F96B01;
+    font-weight: bold;
+    background: rgba(249, 107, 1, 0.1);
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 2px solid #F96B01;
+}
+
+/* Level Selection */
+.level-selection {
+    background: rgba(255, 255, 255, 0);
+    border-radius: 15px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.level-selection h2 {
+    color: #115D92;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+}
+
+.level-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.level-btn {
+    background: linear-gradient(135deg, #7FB827, #115D92);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.level-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.level-btn:active {
+    transform: translateY(0);
+}
+
+.level-title {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.level-desc {
+    display: block;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Game Board */
+.game-board {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.control-btn {
+    background: #F96B01;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(249, 107, 1, 0.3);
+}
+
+.control-btn:hover {
+    background: #e55a00;
+    transform: translateY(-2px);
+}
+
+/* Cards Container */
+.cards-container {
+    display: grid;
+    gap: 10px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.cards-container.grid-12 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.cards-container.grid-16 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+/* Card Styles */
+.card {
+    aspect-ratio: 1;
+    background: #115D92;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease; /* Reducido de 0.6s a 0.3s para más velocidad */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-height: 70px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card.matched {
+    opacity: 0.8; /* Aumentado de 0.7 a 0.8 para mejor visibilidad */
+    cursor: default;
+    border: 2px solid #7FB827; /* Borde verde para cartas emparejadas */
+    box-shadow: 0 0 15px rgba(127, 184, 39, 0.5); /* Efecto de brillo verde */
+}
+
+.card.matched:hover {
+    transform: rotateY(180deg); /* Mantener la imagen visible en hover */
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.card-back {
+    background-color: #115D92;
+    background-image: url('images/ic_card_back.png');
+}
+
+.card-front {
+    background-color: white;
+    transform: rotateY(180deg);
+    border: 3px solid #7FB827;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 400px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+    color: #115D92;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.modal-content p {
+    color: #333;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* Form Styles */
+.registration-form {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    color: #115D92;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+    background-color: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #7FB827;
+    box-shadow: 0 0 5px rgba(127, 184, 39, 0.3);
+}
+
+.form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23115D92' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.form-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #7FB827, #115D92);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.secondary-btn {
+    background: #F96B01;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.secondary-btn:hover {
+    background: #e55a00;
+    transform: translateY(-2px);
+}
+
+#export-csv {
+    margin-left: 10px;
+}
+
+/* Rankings Section */
+.rankings-section {
+    margin-top: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.rankings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.rankings-header h3 {
+    color: #115D92;
+    font-size: 1.3rem;
+    margin: 0;
+}
+
+.rankings-btn {
+    background: #F96B01;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.rankings-btn:hover {
+    background: #e55a00;
+    transform: translateY(-2px);
+}
+
+.top-rankings {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.ranking-item:hover {
+    transform: translateX(5px);
+}
+
+.ranking-position {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 15px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.ranking-medal {
+    font-size: 1.8rem;
+    margin-right: 10px;
+}
+
+.ranking-info {
+    flex: 1;
+}
+
+.ranking-name {
+    font-weight: bold;
+    color: #115D92;
+    font-size: 1rem;
+}
+
+.ranking-details {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 2px;
+}
+
+.ranking-time {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #F96B01;
+    margin-left: 10px;
+}
+
+.no-rankings {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}
+
+.level-section {
+    margin-bottom: 25px;
+}
+
+.level-section:last-child {
+    margin-bottom: 0;
+}
+
+.level-title {
+    color: #115D92;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background: rgba(17, 93, 146, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #115D92;
+}
+
+/* Rankings Modal */
+.rankings-modal-content {
+    max-width: 500px;
+    max-height: 80vh;
+}
+
+.rankings-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.rankings-tab {
+    background: #ddd;
+    color: #666;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.rankings-tab.active {
+    background: linear-gradient(135deg, #7FB827, #115D92);
+    color: white;
+}
+
+.rankings-tab:hover:not(.active) {
+    background: #ccc;
+}
+
+.full-rankings-content {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.rankings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.rankings-table th,
+.rankings-table td {
+    padding: 12px 8px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.rankings-table th {
+    background: #f8f9fa;
+    color: #115D92;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+}
+
+.rankings-table tr:hover {
+    background: #f8f9fa;
+}
+
+.table-position {
+    width: 60px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.table-medal {
+    width: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.table-name {
+    font-weight: bold;
+    color: #115D92;
+}
+
+.table-course {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.table-time {
+    font-weight: bold;
+    color: #F96B01;
+    text-align: center;
+}
+
+.table-level {
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.level-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.level-badge.easy {
+    background: #7FB827;
+    color: white;
+}
+
+.level-badge.hard {
+    background: #115D92;
+    color: white;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .timer {
+        font-size: 1.2rem;
+        padding: 3px 10px;
+    }
+
+    .cards-container {
+        gap: 8px;
+        max-width: 320px;
+    }
+
+    .card {
+        min-height: 60px;
+    }
+
+    .modal-content {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 360px) {
+    .cards-container {
+        gap: 6px;
+        max-width: 280px;
+    }
+
+    .card {
+        min-height: 50px;
+    }
+
+    .header h1 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Large screen optimizations */
+@media (min-width: 768px) {
+    .container {
+        padding: 20px;
+        max-width: 1200px;
+    }
+
+    .header h1 {
+        font-size: 3.5rem;
+    }
+
+    .timer {
+        font-size: 2rem;
+        padding: 8px 20px;
+    }
+
+    .timer-label {
+        font-size: 1.5rem;
+    }
+
+    .cards-container {
+        gap: 15px;
+        max-width: 600px;
+    }
+
+    .card {
+        min-height: 100px;
+    }
+
+    .level-btn {
+        padding: 25px;
+        font-size: 1.2rem;
+    }
+
+    .level-title {
+        font-size: 1.5rem;
+    }
+
+    .level-desc {
+        font-size: 1.1rem;
+    }
+
+    .control-btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+
+    .modal-content {
+        max-width: 500px;
+        padding: 40px;
+    }
+
+    .modal-content h2 {
+        font-size: 2.2rem;
+    }
+
+    .submit-btn {
+        padding: 18px 35px;
+        font-size: 1.2rem;
+    }
+
+    .secondary-btn {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding: 30px;
+        max-width: 1400px;
+    }
+
+    .header h1 {
+        font-size: 4rem;
+    }
+
+    .timer {
+        font-size: 2.5rem;
+        padding: 10px 25px;
+    }
+
+    .timer-label {
+        font-size: 1.8rem;
+    }
+
+    .cards-container {
+        gap: 20px;
+        max-width: 700px;
+    }
+
+    .card {
+        min-height: 120px;
+    }
+
+    .level-btn {
+        padding: 30px;
+        font-size: 1.4rem;
+    }
+
+    .level-title {
+        font-size: 1.7rem;
+    }
+
+    .level-desc {
+        font-size: 1.2rem;
+    }
+
+    .control-btn {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+    }
+
+    .modal-content {
+        max-width: 600px;
+        padding: 50px;
+    }
+
+    .modal-content h2 {
+        font-size: 2.5rem;
+    }
+
+    .submit-btn {
+        padding: 20px 40px;
+        font-size: 1.3rem;
+    }
+
+    .secondary-btn {
+        padding: 18px 35px;
+        font-size: 1.2rem;
+    }
+
+    .rankings-header h3 {
+        font-size: 1.5rem;
+    }
+
+    .ranking-name {
+        font-size: 1.1rem;
+    }
+
+    .ranking-time {
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 1440px) {
+    .container {
+        padding: 40px;
+        max-width: 1600px;
+    }
+
+    .header h1 {
+        font-size: 4.5rem;
+    }
+
+    .timer {
+        font-size: 3rem;
+        padding: 12px 30px;
+    }
+
+    .timer-label {
+        font-size: 2rem;
+    }
+
+    .cards-container {
+        gap: 25px;
+        max-width: 800px;
+    }
+
+    .card {
+        min-height: 140px;
+    }
+
+    .level-btn {
+        padding: 35px;
+        font-size: 1.6rem;
+    }
+
+    .level-title {
+        font-size: 1.9rem;
+    }
+
+    .level-desc {
+        font-size: 1.3rem;
+    }
+
+    .control-btn {
+        padding: 18px 35px;
+        font-size: 1.2rem;
+    }
+
+    .modal-content {
+        max-width: 700px;
+        padding: 60px;
+    }
+
+    .modal-content h2 {
+        font-size: 2.8rem;
+    }
+
+    .submit-btn {
+        padding: 22px 45px;
+        font-size: 1.4rem;
+    }
+
+    .secondary-btn {
+        padding: 20px 40px;
+        font-size: 1.3rem;
+    }
+
+    .rankings-header h3 {
+        font-size: 1.7rem;
+    }
+
+    .ranking-name {
+        font-size: 1.2rem;
+    }
+
+    .ranking-time {
+        font-size: 1.3rem;
+    }
+}
+
+/* Animaciones adicionales */
+@keyframes cardFlip {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(180deg); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+@keyframes matchedPulse {
+    0% { transform: rotateY(180deg) scale(1); }
+    50% { transform: rotateY(180deg) scale(1.1); }
+    100% { transform: rotateY(180deg) scale(1); }
+}
+
+.card.flip-animation {
+    animation: cardFlip 0.1s ease-in-out; /* Más rápido */
+}
+
+.card.matched {
+    animation: matchedPulse 0.1s ease-in-out; /* Animación para cartas emparejadas */
+}
+
+.level-btn:active {
+    animation: bounce 0.3s  ease-in-out;
+}
